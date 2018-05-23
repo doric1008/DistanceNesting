@@ -44,8 +44,9 @@ class Base:
 
 
 
-#此列可以想象成每个a2单元的矩阵，因为层高取值为2组，所以组合共4种情况
+#此列可以想象成每个a2单元的矩阵，因为层高取值为3组，所以组合共9种情况
 #d值为a1的取值范围，因为a1有两个范围，所有d有两个取值
+
 dic0 = {"a00": [0, 45, 90], "d00": [35, 35],
         "a01": [0, 45, 90], "d01": [35, 35],
         "a02": [0, 45, 90], "d02": [13, 13],
@@ -75,6 +76,7 @@ dic2 = {"a00": [0, 45, 90], "d00": [6, 6],
         "a20": [0, 45, 90], "d20": [13,13],
         "a21": [0, 45, 90], "d21": [13, 13],
         "a22": [0, 45, 90], "d22": [24, 24]}
+
 #因为a2的取值范围为两个，所以dic有两个值
 dic = [dic0, dic1,dic2]
 
@@ -84,34 +86,43 @@ c = [0, 30, 90]
 a = [0, 45, 90]
 #层高的取值范围
 b = [1, 4, 10, 1000]
+
+#创建所有a2取值范围数据，也就是整个城市的所有信息
 test3 = Base(c)
-print(test3.input_a2(dic))
+
+#把所有字典信息赋值进大数据库中，此步骤包含所有建筑判断条件的信息，称为最终数据库
+test3.input_a2(dic)
+#最终的字典形式，综合a1,a2,f
+print(test3.data_a2_dictionary)
+#-------------------------------test----------------------
+
+#以下则为检测过程
 
 #选择适当的a2角度
 test3.get_a2(50)
 
 test2 = Item_a2(c)
 test2.floor_corresponding(b)
-
 test2.data_a2_dictionary = test3.data_a2_dictionary_who_use
 
+#打印看选择的a2值属于的字典是否正确
 print(test2.data_a2_dictionary)
-
 test2.create_a1(test2.data_a2_dictionary)
-
+#此处打印的是所有层数的矩阵关系的数据
 print(test2.list_block_dict)
 
 #选择对应的层数
 print(test2.get_zone(15, 15))
 tt = test2.zone_to_a1()
+
+#此处打印的是确定的对应层数的几组a1的数据
 print(tt.data_dictionary)
 
-#选择a1的度数
+#选择a1的度数,打印建筑间距最终值
 print("所选择的建筑高度为：" + str(tt.get_distance(45)))
 
-#print(test3.list_block_dict)
-#最终的字典形式，综合a1,a2,f
-#print(test3.data_a2_dictionary)
+
+
 
 
 
